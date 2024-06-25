@@ -181,6 +181,10 @@ enum schedparam_policy {
 # define ACE_HAS_LKSCTP
 #endif
 
+#if (__FreeBSD_version >= 701000)
+# define ACE_HAS_CPU_SET_T
+#endif
+
 #if (__FreeBSD_version < 700038)
 # define ACE_HAS_VOID_UNSETENV
 #endif

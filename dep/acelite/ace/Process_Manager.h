@@ -4,7 +4,7 @@
 /**
  *  @file    Process_Manager.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -419,6 +419,8 @@ private:
 
     /// Dump the state of an object.
     void dump (void) const;
+
+    ACE_ALLOC_HOOK_DECLARE;
   };
 
   /// Resize the pool of Process_Descriptors.

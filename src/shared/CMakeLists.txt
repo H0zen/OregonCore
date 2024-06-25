@@ -12,7 +12,7 @@ file(GLOB_RECURSE sources_auth Auth/*.cpp Auth/*.h)
 file(GLOB_RECURSE sources_config Config/*.cpp Config/*.h)
 file(GLOB_RECURSE sources_database Database/*.cpp Database/*.h)
 file(GLOB_RECURSE sources_utilities Utilities/*.cpp Utilities/*.h)
-
+file(GLOB_RECURSE sources_policies Policies/*.cpp Policies/*.h)
 file(GLOB sources_localdir *.cpp *.h)
 
 #
@@ -25,29 +25,25 @@ SET(shared_STAT_SRCS
   ${sources_config}
   ${sources_database}
   ${sources_utilities}
+  ${sources_policies}
   ${sources_localdir}
-)
-
-include_directories(
-  ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/dep/SFMT
-  ${CMAKE_SOURCE_DIR}/dep/mersennetwister
-  ${CMAKE_SOURCE_DIR}/dep/sockets/include
-  ${CMAKE_SOURCE_DIR}/dep/utf8cpp
-  ${CMAKE_SOURCE_DIR}/src/framework
-  ${CMAKE_SOURCE_DIR}/src
-  ${CMAKE_SOURCE_DIR}/src/game
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/Auth
-  ${CMAKE_CURRENT_SOURCE_DIR}/Config
-  ${CMAKE_CURRENT_SOURCE_DIR}/Database
-  ${ACE_INCLUDE_DIR}
-  ${MYSQL_INCLUDE_DIR}
-  ${OPENSSL_INCLUDE_DIR}
 )
 
 add_library(shared STATIC ${shared_STAT_SRCS})
 
+target_include_directories(shared
+  PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 target_link_libraries(shared
-  ${ACE_LIBRARY}
+  PUBLIC
+        ace
+        utf8
+        MySQL::MySQL
+        ${OPENSSL_LIBRARIES}
+#if (defined(OPENSSL_VERSION_MAJOR) && OPENSSL_VERSION_MAJOR >= 3)
+        OpenSSL::Crypto
+#endif()
+  
 )

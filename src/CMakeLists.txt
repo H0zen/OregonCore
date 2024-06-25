@@ -23,7 +23,6 @@ if( SERVERS )
   endif(WIN32)
 
   add_subdirectory(genrev)
-  add_subdirectory(framework)
   add_subdirectory(shared)
   add_subdirectory(oregonrealm)
   add_subdirectory(collision)
