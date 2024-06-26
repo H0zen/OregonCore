@@ -22,7 +22,8 @@ SDComment:  timers,
 SDCategory: Karazhan
 EndScriptData */
 
-#include "ScriptPCH.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
 #include "karazhan.h"
 
 //phase 1
@@ -188,7 +189,7 @@ struct boss_nightbaneAI : public ScriptedAI
 			pInstance->SetData(TYPE_NIGHTBANE, IN_PROGRESS);
 
 		HandleTerraceDoors(false);
-		me->MonsterYell(YELL_AGGRO, LANG_UNIVERSAL, NULL);
+		me->MonsterYell(YELL_AGGRO, LANG_UNIVERSAL, 0);
 	}
 
 	void AttackStart(Unit* who)
@@ -274,7 +275,7 @@ struct boss_nightbaneAI : public ScriptedAI
 
 	void TakeOff()
 	{
-		me->MonsterYell(YELL_FLY_PHASE, LANG_UNIVERSAL, NULL);
+		me->MonsterYell(YELL_FLY_PHASE, LANG_UNIVERSAL, 0);
 		me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 		me->InterruptSpell(CURRENT_GENERIC_SPELL);
 		me->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
@@ -471,9 +472,9 @@ struct boss_nightbaneAI : public ScriptedAI
 					bool bChance = urand(0, 1);				
 
 						if (bChance)
-						me->MonsterYell(YELL_LAND_PHASE_1, LANG_UNIVERSAL, NULL);
+						me->MonsterYell(YELL_LAND_PHASE_1, LANG_UNIVERSAL, 0);
 					else
-						 me->MonsterYell(YELL_LAND_PHASE_2, LANG_UNIVERSAL, NULL);
+						 me->MonsterYell(YELL_LAND_PHASE_2, LANG_UNIVERSAL, 0);
 
 					me->GetMotionMaster()->Clear(false);
 					me->GetMotionMaster()->MovePoint(3, IntroWay[3][0], IntroWay[3][1], IntroWay[3][2]);

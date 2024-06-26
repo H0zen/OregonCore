@@ -18,13 +18,15 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include <mysql.h>
+#include "ace/Thread_Mutex.h"
+#include "ace/Guard_T.h"
+#include "ace/Atomic_Op.h"
+
 #include "Threading.h"
 #include "Utilities/UnorderedMap.h"
 #include "Database/SqlDelayThread.h"
 #include "Policies/Singleton.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Guard_T.h"
-#include "ace/Atomic_Op.h"
 #include "PreparedStatement.h"
 #include "QueryResult.h"
 
@@ -32,7 +34,7 @@
 #define FD_SETSIZE 1024
 #include <winsock2.h>
 #endif
-#include <mysql.h>
+
 
 class SqlTransaction;
 class SqlResultQueue;

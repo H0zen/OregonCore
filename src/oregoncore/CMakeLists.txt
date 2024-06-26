@@ -16,7 +16,6 @@ file(GLOB sources_localdir
 set(oregon-core_SRCS
   ${oregon-core_SRCS}
   ${sources_localdir}
-  ${sources_Debugging}
 )
 
 if( WIN32 )
@@ -26,24 +25,6 @@ if( WIN32 )
   )
 endif()
 
-include_directories(
-  ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/dep/gsoap
-  ${CMAKE_SOURCE_DIR}/dep/sockets/include
-  ${CMAKE_SOURCE_DIR}/dep/SFMT
-  ${CMAKE_SOURCE_DIR}/dep/mersennetwister
-  ${CMAKE_SOURCE_DIR}/src/collision
-  ${CMAKE_SOURCE_DIR}/dep/g3dlite/include
-  ${CMAKE_SOURCE_DIR}/src/shared
-  ${CMAKE_SOURCE_DIR}/src/shared/Database
-  ${CMAKE_SOURCE_DIR}/src/framework
-  ${CMAKE_SOURCE_DIR}/src/game
-  ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Detour
-  ${ACE_INCLUDE_DIR}
-  ${MYSQL_INCLUDE_DIR}
-  ${OPENSSL_INCLUDE_DIR}
-)
-
 set(oregon-core_LINK_FLAGS "")
 
 add_executable(oregon-core ${oregon-core_SRCS})
@@ -51,8 +32,6 @@ add_executable(oregon-core ${oregon-core_SRCS})
 if( NOT WIN32 )
   add_definitions(-D_OREGON_CORE_CONFIG="${CONF_DIR}/oregoncore.conf")
 endif()
-
-add_dependencies(oregon-core revision.h)
 
 if( UNIX )
   set(oregon-core_LINK_FLAGS "-pthread -rdynamic ${oregon-core_LINK_FLAGS}")
@@ -64,19 +43,10 @@ target_link_libraries(oregon-core
   game
   shared
   scripts
-  oregonframework
-  collision
-  g3dlib
   gsoap
   Recast
   Detour
-  ${JEMALLOC_LIBRARY}
   ${TERMCAP_LIBRARY}
-  ${ACE_LIBRARY}
-  ${MYSQL_LIBRARY}
-  ${OPENSSL_LIBRARIES}
-  ${OPENSSL_EXTRA_LIBRARIES}
-  ${ZLIB_LIBRARIES}
   ${CURSES_LIBRARY}
   ${OSX_LIBS}
 )
@@ -87,6 +57,8 @@ if( UNIX )
     dl
     ${IBERTY_LIBRARY}
     rt
+    ${SYSINFO_LIBRARY}
+    execinfo
   )
 endif()
 

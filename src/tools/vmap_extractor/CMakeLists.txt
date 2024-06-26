@@ -15,31 +15,14 @@ add_definitions("-DIOMAP_DEBUG")
 
 # build setup currently only supports libmpq 0.4.x
 add_definitions("-DUSE_LIBMPQ04")
-add_definitions("-Wall")
-add_definitions("-ggdb")
-add_definitions("-O3")
 
-if( UNIX )
-  include_directories(
-    ${CMAKE_SOURCE_DIR}/dep/libmpq
-  )
-elseif( WIN32 )
-  include_directories(
-    ${CMAKE_SOURCE_DIR}/dep/libmpq
-    ${CMAKE_SOURCE_DIR}/dep/libmpq/win
-  )
-endif()
 
 add_executable(vmap_extractor ${sources})
 
 target_link_libraries(vmap_extractor
-  ${JEMALLOC_LIBRARY}
   mpq
-  ${BZIP2_LIBRARIES}
-  ${ZLIB_LIBRARIES}
+  G3D::G3D
 )
-
-add_dependencies(vmap_extractor mpq)
 
 if( UNIX )
   install(TARGETS vmap_extractor DESTINATION bin)

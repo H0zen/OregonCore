@@ -35,36 +35,31 @@ struct GameObjectDisplayInfoEntry;
 
 class GameObjectModel /*, public Intersectable*/
 {
-    bool collision_enabled;
-    G3D::AABox iBound;
-    G3D::Matrix3 iInvRot;
-    G3D::Vector3 iPos;
-    //G3D::Vector3 iRot;
-    float iInvScale;
-    float iScale;
-    VMAP::WorldModel* iModel;
+    private:
+        bool                collision_enabled;
+        G3D::AABox          iBound;
+        G3D::Matrix3        iInvRot;
+        G3D::Vector3        iPos;
+        float               iInvScale;
+        float               iScale;
+        VMAP::WorldModel*   iModel;
 
-    GameObjectModel() : collision_enabled(false), iModel(nullptr) {}
-    bool initialize(const GameObject& go, const GameObjectDisplayInfoEntry& info);
+        GameObjectModel() : collision_enabled(false), iModel(nullptr) {}
+        bool initialize(const GameObject& go, const GameObjectDisplayInfoEntry& info);
 
     public:
         std::string name;
-
-        const G3D::AABox& getBounds() const { return iBound; }
-
         ~GameObjectModel();
 
+        const G3D::AABox& getBounds() const { return iBound; }
         const G3D::Vector3& getPosition() const { return iPos;}
+        bool Relocate(GameObject const& go);
 
         /**    Enables\disables collision. */
-        void disable() { collision_enabled = false;}
         void enable(bool enable) { collision_enabled = enable;}
-
         bool intersectRay(const G3D::Ray& Ray, float& MaxDist, bool StopAtFirstHit) const;
 
         static GameObjectModel* Create(const GameObject& go);
-
-        bool Relocate(GameObject const& go); 
 };
 
 #endif // _GAMEOBJECT_MODEL_H

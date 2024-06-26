@@ -19,7 +19,7 @@
 #include "Config/Config.h"
 
 #include "Common.h"
-#include "../../game/UpdateFields.h"
+//#include "../../game/UpdateFields.h"
 
 #include "Utilities/Util.h"
 #include "Platform/Define.h"
@@ -36,7 +36,7 @@
 #include <sys/file.h>
 #endif
 
-static const my_bool my_true = 1;
+static const bool my_true = 1;
 
 size_t Database::db_count = 0;
 
@@ -168,7 +168,7 @@ bool Database::Initialize(const char* infoString)
         Execute("SET CHARACTER SET `utf8`");
 
         #if MYSQL_VERSION_ID >= 50003
-        my_bool my_true = (my_bool)1;
+        bool my_true = (bool)1;
         if (mysql_options(mMysql, MYSQL_OPT_RECONNECT, &my_true))
             sLog.outDebug("Failed to turn on MYSQL_OPT_RECONNECT.");
         else
@@ -176,7 +176,7 @@ bool Database::Initialize(const char* infoString)
         #else
 #warning "Your mySQL client lib version does not support reconnecting after a timeout.\nIf this causes you any trouble we advice you to upgrade your mySQL client libs to at least mySQL 5.0.13 to resolve this problem."
         #endif
-        
+
         m_connected = true;
         return true;
     }

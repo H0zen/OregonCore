@@ -15,12 +15,12 @@
  * with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "Util.h"
-
-#include "utf8.h"
-#include "SFMT.h"
 #include <ace/TSS_T.h>
 #include <ace/INET_Addr.h>
+#include "utf8.h"
+
+#include "Util.h"
+#include "SFMT.h"
 
 typedef ACE_TSS<SFMTRand> SFMTRandTSS;
 static SFMTRandTSS sfmtRand;

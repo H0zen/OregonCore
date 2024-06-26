@@ -17,7 +17,7 @@
 
 #include "Common.h"
 #include "Config/Config.h"
-#include "DatabaseEnv.h"
+#include "Database/DatabaseEnv.h"
 #include "AccountMgr.h"
 #include "Log.h"
 #include "RASocket.h"

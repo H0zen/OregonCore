@@ -61,6 +61,8 @@ add_library(g3dlite STATIC
     G3D/uint128.cpp
 )
 
+add_library(G3D::G3D ALIAS g3dlite)
+
 target_link_libraries(g3dlite
     PRIVATE
         ZLIB::ZLIB

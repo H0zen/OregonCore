@@ -19,7 +19,7 @@
 #define __WORLDSESSION_H
 
 #include "Common.h"
-#include "QueryResult.h"
+#include "Database/QueryResult.h"
 #include "World.h"
 #include "WardenBase.h"
 

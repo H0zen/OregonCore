@@ -22,6 +22,9 @@ SDComment: some small things to research, correct timers, player vs player chess
 SDCategory: Karazhan
 EndScriptData */
 
+#include <algorithm>
+#include <random>
+
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
 #include "karazhan.h"
@@ -1276,7 +1279,10 @@ struct Victory_controlerAI : ScriptedAI
         for (std::list<Creature*>::iterator itr = medivhAI->HordeChessPieces.begin(); itr != medivhAI->HordeChessPieces.end(); itr++)
             pieceList.push_back((*itr));
 
-        std::random_shuffle(pieceList.begin(), pieceList.end());
+        std::random_device rd;
+        std::mt19937 g(rd());
+
+        std::shuffle(pieceList.begin(), pieceList.end(), g);
     }
 
     void StopDespawn()

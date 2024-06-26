@@ -14,21 +14,24 @@ set(mpq_STAT_SRCS
   ${sources_mpq}
 )
 
-if( UNIX )
-  include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/dep/zlib
-    ${CMAKE_SOURCE_DIR}/dep/bzip2
-  )
-elseif( WIN32 )
-  include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/win
-    ${CMAKE_SOURCE_DIR}/dep/zlib
-    ${CMAKE_SOURCE_DIR}/dep/bzip2
-  )
+add_library(mpq STATIC ${mpq_STAT_SRCS})
+set_target_properties(mpq PROPERTIES LINKER_LANGUAGE CXX)
+
+target_include_directories(mpq
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+if(WIN32)
+    target_include_directories(mpq
+        PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CMAKE_CURRENT_SOURCE_DIR}/win)
 endif()
 
-add_library(mpq STATIC ${mpq_STAT_SRCS})
 
-set_target_properties(mpq PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(mpq
+    PUBLIC
+        ZLIB::ZLIB
+        BZip2::BZip2
+)

@@ -18,24 +18,40 @@
 #include "Auth/Hmac.h"
 #include "BigNumber.h"
 
-HmacHash::HmacHash()
+void HmacHash::hmac_internal_setup()
 {
     uint8 temp[SEED_KEY_SIZE] = { 0x38, 0xA7, 0x83, 0x15, 0xF8, 0x92, 0x25, 0x30, 0x71, 0x98, 0x67, 0xB1, 0x8C, 0x4, 0xE2, 0xAA };
+
+    memset(m_digest, 0, sizeof(m_digest));
     memcpy(&m_key, &temp, SEED_KEY_SIZE);
+
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
     HMAC_CTX_init(&m_ctx);
     HMAC_Init_ex(&m_ctx, &m_key, SEED_KEY_SIZE, EVP_sha1(), NULL);
+#else
+    m_ctx = HMAC_CTX_new();
+    HMAC_Init_ex(m_ctx, &m_key, SEED_KEY_SIZE, EVP_sha1(), NULL);
+#endif
+
+}
+
+HmacHash::HmacHash()
+{
+    hmac_internal_setup();
 }
 
 HmacHash::HmacHash(uint32 /*len*/, uint8* /*seed*/)
 {
-    HMAC_CTX_init(&m_ctx);
-    HMAC_Init_ex(&m_ctx, &m_key, SEED_KEY_SIZE, EVP_sha1(), NULL);
-    memset(m_digest, 0, sizeof(m_digest));
+    hmac_internal_setup();
 }
 
 HmacHash::~HmacHash()
 {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
     HMAC_CTX_cleanup(&m_ctx);
+#else
+    HMAC_CTX_free(m_ctx);
+#endif
 }
 
 void HmacHash::UpdateBigNumber(BigNumber* bn)
@@ -45,7 +61,11 @@ void HmacHash::UpdateBigNumber(BigNumber* bn)
 
 void HmacHash::UpdateData(const uint8* data, int length)
 {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
     HMAC_Update(&m_ctx, data, length);
+#else
+    HMAC_Update(m_ctx, data, length);
+#endif
 }
 
 void HmacHash::UpdateData(const std::string& str)
@@ -55,12 +75,20 @@ void HmacHash::UpdateData(const std::string& str)
 
 void HmacHash::Initialize()
 {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
     HMAC_Init_ex(&m_ctx, &m_key, SEED_KEY_SIZE, EVP_sha1(), NULL);
+#else
+    HMAC_Init_ex(m_ctx, &m_key, SEED_KEY_SIZE, EVP_sha1(), NULL);
+#endif
 }
 
 void HmacHash::Finalize()
 {
     uint32 length = 0;
-    HMAC_Final(&m_ctx, m_digest, &length);
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+    HMAC_Final(&m_ctx, (uint8*)m_digest, &length);
+#else
+    HMAC_Final(m_ctx, (uint8*)m_digest, &length);
+#endif
     ASSERT(length == SHA_DIGEST_LENGTH);
 }

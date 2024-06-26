@@ -45,6 +45,10 @@
 #include <execinfo.h>
 #include <bfd.h>
 
+#ifdef __FreeBSD__
+#  include <pthread_np.h>
+#endif
+
 extern char** environ;
 
 #define CRASH_DIR "Crashes"
@@ -126,11 +130,20 @@ void UnixDebugger::SignalHandler(int num, siginfo_t* info, void* ctx)
                << std::hex << "0x"
                << (unsigned long) info->si_addr
                << " referenced from: 0x"
+
+#ifdef __FreeBSD__
+               #ifdef __amd64__
+               << std::hex << reinterpret_cast<struct sigcontext*> (&reinterpret_cast<ucontext_t*>(ctx)->uc_mcontext)->sc_rip
+               #else
+               << std::hex << reinterpret_cast<struct sigcontext*> (&reinterpret_cast<ucontext_t*>(ctx)->uc_mcontext)->eip
+               #endif
+#else
                #ifdef __x86_64__
                << std::hex << reinterpret_cast<struct sigcontext*> (&reinterpret_cast<ucontext_t*>(ctx)->uc_mcontext)->rip
                #else
                << std::hex << reinterpret_cast<struct sigcontext*> (&reinterpret_cast<ucontext_t*>(ctx)->uc_mcontext)->eip
                #endif
+#endif
                << ": ";
 
         switch (num)
@@ -279,8 +292,11 @@ void UnixDebugger::WriteBacktrace(std::stringstream& ss)
     ss << "BackTrace ";
     if (size == BACKTRACE_SIZE)
         ss << "(Might be truncated) ";
+#ifdef __FreeBSD__
+    ss << "Thread LWP " << pthread_getthreadid_np();
+#else
     ss << "Thread LWP " << syscall(SYS_gettid);
-    
+#endif
     ss << std::endl << "=====================================" << std::endl;
 
     std::map<std::string, Resolver*> atlm;

@@ -15,7 +15,7 @@
 * with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "DatabaseEnv.h"
+#include "Database/DatabaseEnv.h"
 #include "ObjectMgr.h"
 #include "GridDefines.h"
 #include "GridNotifiers.h"

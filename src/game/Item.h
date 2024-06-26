@@ -22,7 +22,7 @@
 #include "Object.h"
 #include "LootMgr.h"
 #include "ItemPrototype.h"
-#include "QueryResult.h"
+#include "Database/QueryResult.h"
 
 struct SpellEntry;
 class Bag;

@@ -58,16 +58,16 @@ endif()
 include(CheckPlatform)
 
 # basic package searching and setup
-find_package(PCHSupport)
-find_package(ACE REQUIRED)
+#find_package(ACE REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(MySQL REQUIRED)
 
 if( UNIX )
-  find_package(Curses)
-  find_package(ZLIB)
-  find_package(BZip2)
-  find_package(Binutils)
+   find_package(Curses)
+   find_package(ZLIB)
+   find_package(BZip2)
+find_package(Binutils)
+find_package(SysInfo)
 endif()
 
 # Find revision ID and hash of the sourcetree

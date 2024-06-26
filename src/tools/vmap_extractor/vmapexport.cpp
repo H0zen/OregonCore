@@ -478,9 +478,9 @@ int main(int argc, char** argv)
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // Create the working directory
     if (mkdir(szWorkDirWmo
-#ifdef __linux__
+#ifndef WIN32
               , 0711
-          #endif
+#endif
              ))
         success = (errno == EEXIST);
 

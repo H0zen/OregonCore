@@ -20,7 +20,7 @@
 #include "Cell.h"
 #include "CellImpl.h"
 #include "CreatureTextMgr.h"
-#include "DatabaseEnv.h"
+#include "Database/DatabaseEnv.h"
 #include "GossipDef.h"
 #include "GridDefines.h"
 #include "GridNotifiers.h"

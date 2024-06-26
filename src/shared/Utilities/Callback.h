@@ -299,7 +299,7 @@ class Callback < Class > : public _ICallback< _Callback < Class > >
 
 // QUERY CALLBACKS
 
-#include "QueryResult.h"
+#include "Database/QueryResult.h"
 class QueryResult;
 
 namespace Oregon

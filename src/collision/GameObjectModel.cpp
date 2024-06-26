@@ -33,14 +33,13 @@ using G3D::AABox;
 
 struct GameobjectModelData
 {
-    GameobjectModelData(const std::string& name_, const AABox& box) :
-        bound(box), name(name_) {}
-
+    GameobjectModelData(const std::string& name_, const AABox& box) : bound(box), name(name_) {}
     AABox bound;
     std::string name;
 };
 
 typedef std::unordered_map<uint32, GameobjectModelData> ModelList;
+
 ModelList model_list;
 
 void LoadGameObjectModelList()
@@ -90,7 +89,7 @@ GameObjectModel::~GameObjectModel()
 
 bool GameObjectModel::initialize(const GameObject& go, const GameObjectDisplayInfoEntry& info)
 {
-    ModelList::const_iterator it = model_list.find(info.Displayid);
+    const auto& it = model_list.find(info.Displayid);
     if (it == model_list.end())
         return false;
 

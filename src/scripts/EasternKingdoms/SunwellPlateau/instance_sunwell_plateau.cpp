@@ -232,7 +232,7 @@ struct instance_sunwell_plateau : public ScriptedInstance
             break;
         case 188075:
             if (m_auiEncounter[2] == DONE)
-                HandleGameObject(NULL, true, pGo);
+                HandleGameObject(0, true, pGo);
             FireBarrier = pGo->GetGUID();
             break;
         case 187990:
@@ -240,7 +240,7 @@ struct instance_sunwell_plateau : public ScriptedInstance
             break;
         case 188118:
             if (m_auiEncounter[4] == DONE)
-                HandleGameObject(NULL, true, pGo);
+                HandleGameObject(0, true, pGo);
             MurusGate[1] = pGo->GetGUID();
             break;
         case 188415:

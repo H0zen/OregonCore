@@ -349,6 +349,4 @@ target_compile_definitions(ace
         $<$<PLATFORM_ID:FreeBSD>:_WANT_SEMUN>
 )
 
-if(PCH)
-    add_cxx_pch(ace ${CMAKE_CURRENT_SOURCE_DIR}/pch.h ${CMAKE_CURRENT_SOURCE_DIR}/pch.cpp)
-endif()
+target_precompile_headers(ace PRIVATE pch.h)

@@ -21,7 +21,7 @@
 #include "Common.h"
 #include "SharedDefines.h"
 #include "DBCStructure.h"
-#include "QueryResult.h"
+#include "Database/QueryResult.h"
 #include <map>
 
 enum FactionFlags

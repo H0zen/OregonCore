@@ -16,7 +16,7 @@
 */
 
 #include "Common.h"
-#include "DatabaseEnv.h"
+#include "Database/DatabaseEnv.h"
 #include "ObjectMgr.h"
 #include "Cell.h"
 #include "CellImpl.h"

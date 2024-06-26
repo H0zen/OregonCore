@@ -9,11 +9,11 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-option(SERVERS          "Build worldserver and authserver"                            1)
-option(SCRIPTS          "Build core with scripts included"                            1)
-option(TOOLS            "Build map/vmap extraction/assembler tools"                   0)
-option(USE_SCRIPTPCH    "Use precompiled headers when compiling scripts"              1)
-option(USE_COREPCH      "Use precompiled headers when compiling servers"              1)
-option(WITH_WARNINGS    "Show all warnings during compile"                            0)
+option(SERVERS          "Build worldserver and authserver"                            ON)
+option(SCRIPTS          "Build core with scripts included"                            ON)
+option(TOOLS            "Build map/vmap extraction/assembler tools"                   ON)
+option(USE_SCRIPTPCH    "Use precompiled headers when compiling scripts"              ON)
+option(USE_COREPCH      "Use precompiled headers when compiling servers"              ON)
+option(WITH_WARNINGS    "Show all warnings during compile"                            OFF)
 option(WITH_COREDEBUG   "Include additional debug-code in core"                       0)
-option(WITH_DOCS        "Build Doxygen Documentation"                                 0)
+option(WITH_DOCS        "Build Doxygen Documentation"                                 ON)

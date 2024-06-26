@@ -8,12 +8,6 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-# Enable precompiled headers when using the GCC compiler.
-if( USE_SCRIPTPCH )
-  include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}
-  )
-endif()
 
 file(GLOB_RECURSE scripts_custom Custom/*.cpp Custom/*.h)
 file(GLOB_RECURSE scripts_easternplaguelands EasternKingdoms/*.cpp EasternKingdoms/*.h)
@@ -21,22 +15,6 @@ file(GLOB_RECURSE scripts_examples Examples/*.cpp Examples/*.h)
 file(GLOB_RECURSE scripts_kalimdor Kalimdor/*.cpp Kalimdor/*.h)
 file(GLOB_RECURSE scripts_outland Outland/*.cpp Outland/*.h)
 file(GLOB_RECURSE scripts_world World/*.cpp World/*.h)
-
-if( USE_SCRIPTPCH AND MSVC )
-  set(scripts_STAT_SRCS
-    PrecompiledHeaders/ScriptPCH.cpp
-    PrecompiledHeaders/ScriptPCH.h
-  )
-endif()
-
-set(scripts_STAT_SRCS
-  ${scripts_STAT_SRCS}
-  ../game/ScriptedEscortAI.cpp
-  ../game/ScriptedGuardAI.cpp
-  ../game/ScriptedCreature.cpp
-  ../game/ScriptedFollowerAI.cpp
-  ../game/ScriptedSimpleAI.cpp
-)
 
 if(SCRIPTS)
   set(scripts_STAT_SRCS
@@ -50,36 +28,16 @@ if(SCRIPTS)
   )
 endif()
 
-include_directories(
-  ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/dep/g3dlite/include
-  ${CMAKE_SOURCE_DIR}/dep/SFMT
-  ${CMAKE_SOURCE_DIR}/dep/mersennetwister
-  ${CMAKE_SOURCE_DIR}/dep/zlib
-  ${CMAKE_SOURCE_DIR}/src/framework
-  ${CMAKE_SOURCE_DIR}/src/collision
-  ${CMAKE_SOURCE_DIR}/src/game
-  ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Detour
-  ${CMAKE_SOURCE_DIR}/dep/recastnavigation
-  ${CMAKE_SOURCE_DIR}/src/shared
-  ${CMAKE_SOURCE_DIR}/src/shared/Database
-  ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders
-  ${ACE_INCLUDE_DIR}
-  ${MYSQL_INCLUDE_DIR}
-  ${OPENSSL_INCLUDE_DIR}
-)
-
 add_library(scripts STATIC ${scripts_STAT_SRCS})
+target_link_libraries(scripts
+    PRIVATE
+        gameintf
+        collision
+        RecastNavigation::Detour
+        shared
+)
+target_precompile_headers(scripts PRIVATE ScriptPCH.h)
 
-add_dependencies(scripts revision.h)
 
-# Generate precompiled header
-if( USE_SCRIPTPCH )
-  if(CMAKE_COMPILER_IS_GNUCXX)
-    add_precompiled_header(scripts ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/ScriptPCH.h)
-  elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    add_clang_pch(scripts "${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders" "ScriptPCH.h" "ScriptPCH.cpp")
-  elseif(MSVC)
-    add_native_precompiled_header(scripts ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/ScriptPCH)
-  endif()
-endif()
+
+

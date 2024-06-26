@@ -41,11 +41,11 @@ PreparedQueryResult::PreparedQueryResult(MYSQL_STMT* stmt) : mCursor(0)
     mRowCount = mysql_stmt_num_rows(stmt);
 
     MYSQL_BIND* binding = new MYSQL_BIND[mFieldCount];
-    my_bool* isNull = new my_bool[mFieldCount];
+    bool* isNull = new bool[mFieldCount];
     unsigned long* length = new unsigned long[mFieldCount];
 
     memset(binding, 0, sizeof(MYSQL_BIND) * mFieldCount);
-    memset(isNull,  0, sizeof(my_bool) * mFieldCount);
+    memset(isNull,  0, sizeof(bool) * mFieldCount);
     memset(length,  0, sizeof(unsigned long) * mFieldCount);
 
     mMetaData = mysql_stmt_result_metadata(stmt);

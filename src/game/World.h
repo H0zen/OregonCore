@@ -23,7 +23,7 @@
 #include "Policies/Singleton.h"
 #include "SharedDefines.h"
 #include "ace/Atomic_Op.h"
-#include "QueryResult.h"
+#include "Database/QueryResult.h"
 
 #include <map>
 #include <set>

@@ -1,9 +1,32 @@
 
-FIND_PATH(BFD_INCLUDE_DIR bfd.h
-          PATH_SUFFIXES libbfd)
+FIND_PATH(BFD_INCLUDE_DIR
+          NAMES
+            bfd.h
+          PATHS
+            /usr
+            /usr/local
+            /usr/local/include
+          PATH_SUFFIXES
+            libbfd
+)
 
-FIND_LIBRARY(BFD_LIBRARY NAMES bfd) 
-FIND_LIBRARY(IBERTY_LIBRARY NAMES iberty) 
+FIND_LIBRARY(BFD_LIBRARY
+    NAMES
+        bfd
+    PATHS
+      /usr
+      /usr/local/
+    PATH_SUFFIXES lib lib/opt
+)
+
+FIND_LIBRARY(IBERTY_LIBRARY
+    NAMES
+        iberty
+    PATHS
+      /usr
+      /usr/local/
+    PATH_SUFFIXES lib lib/opt
+)
 
 IF (IBERTY_LIBRARY AND BFD_LIBRARY AND BFD_INCLUDE_DIR)
     SET(BINUTILS_FOUND TRUE)

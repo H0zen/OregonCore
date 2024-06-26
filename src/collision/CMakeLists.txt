@@ -30,4 +30,5 @@ target_link_libraries(collision
   PUBLIC
     shared
     g3dlite
+    gameintf
 )

@@ -25,34 +25,29 @@ add_definitions(-DNO_CORE_FUNCS)
 add_definitions(-DDEBUG)
 add_definitions(-DNO_vsnprintf)
 
-include_directories(
-  ${JEMALLOC_LIBRARY}
-  ${ACE_INCLUDE_DIR}
-  ${CMAKE_SOURCE_DIR}/dep/libmpq
-  ${CMAKE_SOURCE_DIR}/dep/zlib
-  ${CMAKE_SOURCE_DIR}/dep/g3dlite/include
-  ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Recast
-  ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Detour
-  ${CMAKE_SOURCE_DIR}/src/shared
-  ${CMAKE_SOURCE_DIR}/src/collision
-  ${CMAKE_SOURCE_DIR}/src/framework
-  ${CMAKE_SOURCE_DIR}/src/game
-)
-
 add_executable(movements_extractor
     ${sources}
 )
 
-target_link_libraries(movements_extractor
-  ${JEMALLOC_LIBRARY}
-  ${ACE_LIBRARY}
-  ${BZIP2_LIBRARIES}
-  ${ZLIB_LIBRARIES}
+if( UNIX )
+  set(mv_LINK_FLAGS "-pthread -rdynamic ${mv_LINK_FLAGS}")
+endif()
+
+set_target_properties(movements_extractor PROPERTIES LINK_FLAGS "${mv_LINK_FLAGS}")
+
+target_link_libraries(movements_extractor PRIVATE
   Recast
   Detour
   collision
-  g3dlib
 )
+
+if( UNIX )
+  target_link_libraries(oregon-core
+    dl
+    rt
+  )
+endif()
+
 
 if( UNIX )
   install(TARGETS movements_extractor DESTINATION bin)

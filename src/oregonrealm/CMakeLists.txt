@@ -13,7 +13,6 @@ file(GLOB sources_localdir *.cpp *.h)
 set(oregon-realm_SRCS
   ${oregon-realm_SRCS}
   ${sources_localdir}
-  ${sources_Debugging}
 )
 
 if( WIN32 )
@@ -23,23 +22,11 @@ if( WIN32 )
   )
 endif()
 
-include_directories(
-  ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/src/shared
-  ${CMAKE_SOURCE_DIR}/src/shared/Database
-  ${CMAKE_SOURCE_DIR}/src/framework
-  ${ACE_INCLUDE_DIR}
-  ${MYSQL_INCLUDE_DIR}
-  ${OPENSSL_INCLUDE_DIR}
-)
-
 set(oregon-realm_LINK_FLAGS "-rdynamic")
 
 add_executable(oregon-realm
   ${oregon-realm_SRCS}
 )
-
-add_dependencies(oregon-realm revision.h)
 
 if( NOT WIN32 )
   add_definitions(-D_OREGON_REALM_CONFIG="${CONF_DIR}/oregonrealm.conf")
@@ -57,10 +44,6 @@ set_target_properties(oregon-realm PROPERTIES LINK_FLAGS "${oregon-realm_LINK_FL
 
 target_link_libraries(oregon-realm
   shared
-  oregonframework
-  ${MYSQL_LIBRARY}
-  ${OPENSSL_LIBRARIES}
-  ${OPENSSL_EXTRA_LIBRARIES}
   ${OSX_LIBS}
 )
 
@@ -71,6 +54,8 @@ if( UNIX )
     ${IBERTY_LIBRARY}
     rt
     ${ZLIB_LIBRARIES}
+    ${SYSINFO_LIBRARY}
+    execinfo
   )
 endif()
 

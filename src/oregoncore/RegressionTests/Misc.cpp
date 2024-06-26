@@ -16,7 +16,9 @@
  */
 
 #include "RegressionTest.h"
-#include <PrecompiledHeaders/gamePCH.h>
+#include "WorldSession.h"
+#include "Player.h"
+#include "ObjectAccessor.h"
 
 /**
   * Test for issue #1334.
