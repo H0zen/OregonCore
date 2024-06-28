@@ -22,14 +22,6 @@ target_include_directories(mpq
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-if(WIN32)
-    target_include_directories(mpq
-        PUBLIC
-            ${CMAKE_CURRENT_SOURCE_DIR}
-            ${CMAKE_CURRENT_SOURCE_DIR}/win)
-endif()
-
-
 target_link_libraries(mpq
     PUBLIC
         ZLIB::ZLIB

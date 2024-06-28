@@ -112,7 +112,7 @@ inline bool SelectTargetHelper(const Unit* me, const Unit* target, const bool& p
     return true;
 }
 
-struct TargetDistanceOrder : public std::binary_function<const Unit*, const Unit*, bool>
+struct TargetDistanceOrder
 {
     const Unit* me;
     TargetDistanceOrder(const Unit* Target) : me(Target) {};

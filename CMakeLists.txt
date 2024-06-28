@@ -66,8 +66,8 @@ if( UNIX )
    find_package(Curses)
    find_package(ZLIB)
    find_package(BZip2)
-find_package(Binutils)
-find_package(SysInfo)
+   find_package(Binutils)
+   find_package(SysInfo)
 endif()
 
 # Find revision ID and hash of the sourcetree

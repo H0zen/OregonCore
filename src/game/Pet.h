@@ -162,7 +162,7 @@ class Pet : public Guardian
         }
         bool isControlled() const
         {
-            return getPetType() == SUMMON_PET || getPetType() == HUNTER_PET;
+            return (getPetType() && SUMMON_PET) || (getPetType() && HUNTER_PET);
         }
         bool isTemporarySummoned() const
         {

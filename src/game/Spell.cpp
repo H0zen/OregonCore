@@ -1335,7 +1335,7 @@ bool Spell::IsAliveUnitPresentInTargetList()
 // Spell target first
 // Raidmates then descending by injury suffered (MaxHealth - Health)
 // Other players/mobs then descending by injury suffered (MaxHealth - Health)
-struct ChainHealingOrder : public std::binary_function<const Unit*, const Unit*, bool>
+struct ChainHealingOrder
 {
     const Unit* MainTarget;
     ChainHealingOrder(Unit const* Target) : MainTarget(Target) {};
@@ -1364,7 +1364,7 @@ struct ChainHealingOrder : public std::binary_function<const Unit*, const Unit*,
 
 // Helper for targets nearest to the spell target
 // The spell target is always first unless there is a target at _completely_ the same position (unbelievable case)
-struct TargetDistanceOrder : public std::binary_function<const Unit, const Unit, bool>
+struct TargetDistanceOrder
 {
     const Unit* MainTarget;
     TargetDistanceOrder(const Unit* Target) : MainTarget(Target) {};

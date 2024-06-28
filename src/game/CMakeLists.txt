@@ -40,6 +40,7 @@ target_link_libraries(game
         collision
         shared
         RecastNavigation::Detour
+		ZLIB::ZLIB
 )
 
 target_precompile_headers(game PRIVATE gamePCH.h)

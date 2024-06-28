@@ -8,39 +8,17 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-file(GLOB_RECURSE sources *.cpp *.h)
+file(GLOB_RECURSE sources *.cpp)
 
-if( UNIX )
-  include_directories (
-    ${CMAKE_SOURCE_DIR}/src/shared
-    ${CMAKE_SOURCE_DIR}/dep/libmpq
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/loadlib
-    ${CMAKE_SOURCE_DIR}/dep/zlib
-  )
-elseif( WIN32 )
-  include_directories (
-    ${CMAKE_SOURCE_DIR}/src/shared
-    ${CMAKE_SOURCE_DIR}/dep/libmpq
-    ${CMAKE_SOURCE_DIR}/dep/libmpq/win
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/loadlib
-    ${CMAKE_SOURCE_DIR}/dep/zlib
-  )
-endif()
 
 add_executable(map_extractor
   ${sources}
 )
 
 target_link_libraries(map_extractor
-  ${JEMALLOC_LIBRARY}
-  mpq
-  ${BZIP2_LIBRARIES}
-  ${ZLIB_LIBRARIES}
+	PRIVATE
+		mpq
 )
-
-add_dependencies(map_extractor mpq)
 
 if( UNIX )
   install(TARGETS map_extractor DESTINATION bin)

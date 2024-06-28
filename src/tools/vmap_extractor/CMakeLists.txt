@@ -20,6 +20,7 @@ add_definitions("-DUSE_LIBMPQ04")
 add_executable(vmap_extractor ${sources})
 
 target_link_libraries(vmap_extractor
+  ace
   mpq
   G3D::G3D
 )

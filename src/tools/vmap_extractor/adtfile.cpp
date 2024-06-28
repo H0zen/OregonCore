@@ -15,15 +15,13 @@
  * with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <algorithm>
+#include <cstdio>
+#include <ACE/OS_NS_strings.h>
+
 #include "vmapexport.h"
 #include "adtfile.h"
 
-#include <algorithm>
-#include <cstdio>
-
-#ifdef WIN32
-#define snprintf _snprintf
-#endif
 
 const char * GetPlainName(const char * FileName)
 {
